@@ -98,11 +98,11 @@ export class TasksService {
       };
     }
 
-    const taskDeleted = await taskFound.deleteOne();
+    await taskFound.deleteOne();
     return {
       ok: true,
       message: 'Task deleted succesfully',
-      data: taskDeleted,
+      data: taskFound,
     };
   }
 }
