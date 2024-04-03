@@ -78,11 +78,31 @@ export class TasksService {
       };
     }
 
-    const taskUpdate = await taskFound.updateOne(newTask);
+    await taskFound.updateOne(newTask);
+    const taskUpdated = await this.taskModel.findById(id);
     return {
       ok: true,
       message: 'Task updated succesfully',
-      data: taskUpdate,
+      data: taskUpdated,
+    };
+  }
+
+  async deleteTask(@Param('id') id: number) {
+    const taskFound = await this.taskModel.findById(id);
+
+    if (!taskFound) {
+      return {
+        ok: false,
+        message: 'Task not found',
+        data: null,
+      };
+    }
+
+    const taskDeleted = await taskFound.deleteOne();
+    return {
+      ok: true,
+      message: 'Task deleted succesfully',
+      data: taskDeleted,
     };
   }
 }
