@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, Injectable, Param } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Task } from './tasks.entity';
 import { Model } from 'mongoose';
@@ -42,5 +42,45 @@ export class TasksService {
 
     const task = new this.taskModel(taskData);
     return { ok: true, message: 'Task created', data: task };
+  }
+
+  async update(
+    @Param('id') id: number,
+    @Body() body,
+  ): Promise<{ ok: boolean; message: string; data: Task }> {
+    const taskFound = await this.taskModel.findById(id);
+
+    if (!taskFound) {
+      return {
+        ok: false,
+        message: 'Task not found',
+        data: null,
+      };
+    }
+
+    const newTask = {
+      title: body.title,
+      description: body.description,
+      completed: body.completed,
+    };
+
+    if (
+      newTask.title.length == 0 ||
+      newTask.description.length == 0 ||
+      newTask.completed.length == 0
+    ) {
+      return {
+        ok: false,
+        message: 'All fields required',
+        data: null,
+      };
+    }
+
+    const taskUpdate = await taskFound.updateOne(newTask);
+    return {
+      ok: true,
+      message: 'Task updated succesfully',
+      data: taskUpdate,
+    };
   }
 }
