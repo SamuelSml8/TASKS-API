@@ -11,7 +11,11 @@ export class TasksService {
 
   //   GET METHOD TO OBTAIN ALL TASKS
   findAll() {
-    return this.taskModel.find().exec();
+    return {
+      ok: true,
+      message: 'All tasks',
+      data: this.taskModel.find().exec(),
+    };
   }
 
   //   POST METHOD TO CREATE ONE TASK
