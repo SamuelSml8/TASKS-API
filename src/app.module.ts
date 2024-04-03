@@ -7,7 +7,8 @@ import { TasksModule } from './tasks/tasks/tasks.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://samuel8:t4ImxkPNMXAhIrLt@users-nodejs.eyxgrp5.mongodb.net/test.tasksAPI',
+      'mongodb+srv://samuel8:t4ImxkPNMXAhIrLt@users-nodejs.eyxgrp5.mongodb.net/',
+      { dbName: 'tasks_api' },
     ),
     TasksModule,
   ],
