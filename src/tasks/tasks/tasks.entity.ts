@@ -6,7 +6,7 @@ export class Task extends Document {
   @Prop()
   title: string;
   @Prop()
-  decription: string;
+  description: string;
   @Prop()
   completed: boolean;
 }
