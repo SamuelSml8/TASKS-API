@@ -10,11 +10,12 @@ export class TasksService {
   //*   METHODS TO EXPORT CONTROLLER
 
   //   GET METHOD TO OBTAIN ALL TASKS
-  findAll() {
+  async findAll() {
+    const tasks = await this.taskModel.find().exec();
     return {
       ok: true,
       message: 'All tasks',
-      data: this.taskModel.find().exec(),
+      data: tasks,
     };
   }
 
@@ -41,7 +42,8 @@ export class TasksService {
     }
 
     const task = new this.taskModel(taskData);
-    return { ok: true, message: 'Task created', data: task };
+    const taskSaved = await task.save();
+    return { ok: true, message: 'Task created', data: taskSaved };
   }
 
   async update(
